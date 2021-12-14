@@ -2,7 +2,7 @@
 import { Transition } from '@douyinfe/semi-animation-react';
 import PropTypes from 'prop-types';
 import cls from 'classnames';
-import React, { useRef, useState, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { cssClasses } from '@douyinfe/semi-foundation/collapsible/constants';
 import { Motion } from '../_base/base';
 import getMotionObjFromProps from '@douyinfe/semi-foundation/utils/getMotionObjFromProps';
@@ -70,7 +70,7 @@ const Collapsible = (props: CollapsibleProps) => {
         return isOpen || !shouldKeepDOM() && !motion ? 'none' : collapseHeight;
     }, [collapseHeight, motion, isOpen, shouldKeepDOM]);
 
-    const renderChildren = (transitionStyle: Record<string, any>) => {
+    const renderChildren = (transitionStyle: Record<string, any>, isOpen: boolean) => {
         const transition =
             transitionStyle && typeof transitionStyle === 'object' ?
                 formatStyle(transitionStyle) :
@@ -89,8 +89,8 @@ const Collapsible = (props: CollapsibleProps) => {
 
         const wrapperCls = cls(`${cssClasses.PREFIX}-wrapper`, className);
         return (
-            <div style={wrapperstyle} className={wrapperCls} ref={ref}>
-                <div ref={setHeight} style={{overflow:'hidden'}}>{children}</div>
+            <div style={wrapperstyle} className={wrapperCls} ref={ref} aria-hidden={!isOpen}>
+                <div ref={setHeight} style={{ overflow: 'hidden' }} aria-label={'content'}>{children}</div>
             </div>
         );
     };
@@ -121,7 +121,7 @@ const Collapsible = (props: CollapsibleProps) => {
                 {...mergedMotion}
             >
                 {(transitionStyle: Record<string, any>) =>
-                    renderChildren(motion ? transitionStyle : null)
+                    renderChildren(motion ? transitionStyle : null, isOpen)
                 }
             </Transition>
         );
