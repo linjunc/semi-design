@@ -14,6 +14,7 @@ import BaseComponent from '../_base/baseComponent';
 import { isSemiIcon } from '../_utils';
 import { noop } from 'lodash';
 import { IconAlertTriangle, IconInfoCircle, IconTickCircle, IconAlertCircle, IconClose } from '@douyinfe/semi-icons';
+import { getUuidv4 } from '@douyinfe/semi-foundation/utils/uuid';
 
 export interface NoticeReactProps extends NoticeProps{
     style?: React.CSSProperties;
@@ -152,6 +153,7 @@ class Notice extends BaseComponent<NoticeReactProps, NoticeState> {
             [`${prefixCls}-${theme}`]: theme === 'light',
             [`${prefixCls}-rtl`]: direction === 'rtl',
         });
+        const titleID = getUuidv4();
         return (
             <div
                 className={wrapper}
@@ -159,12 +161,13 @@ class Notice extends BaseComponent<NoticeReactProps, NoticeState> {
                 onMouseEnter={this.clearCloseTimer}
                 onMouseLeave={this.startCloseTimer}
                 onClick={this.notifyClick}
+                aria-labelledby={titleID}
             >
                 <div>{this.renderTypeIcon()}</div>
                 <div className={`${prefixCls}-inner`}>
-                    <div className={`${prefixCls}-content-wrapper`}>
-                        {title ? <div className={`${prefixCls}-title`}>{title}</div> : ''}
-                        {content ? <div className={`${prefixCls}-content`}>{content}</div> : ''}
+                    <div className={`${prefixCls}-content-wrapper`} aria-label={'wrapper'}>
+                        {title ? <div id={titleID} className={`${prefixCls}-title`} aria-label={'notification-title'}>{title}</div> : ''}
+                        {content ? <div className={`${prefixCls}-content`} aria-label={'notification-content'}>{content}</div> : ''}
                     </div>
                     {showClose && (
                         <Button
