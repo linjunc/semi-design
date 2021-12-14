@@ -90,7 +90,7 @@ const Collapsible = (props: CollapsibleProps) => {
         const wrapperCls = cls(`${cssClasses.PREFIX}-wrapper`, className);
         return (
             <div style={wrapperstyle} className={wrapperCls} ref={ref} aria-hidden={!isOpen}>
-                <div ref={setHeight} style={{ overflow: 'hidden' }} aria-label={'content'}>{children}</div>
+                <div ref={setHeight} style={{ overflow: 'hidden' }} aria-label={'Content'}>{children}</div>
             </div>
         );
     };
