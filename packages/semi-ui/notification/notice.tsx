@@ -166,8 +166,8 @@ class Notice extends BaseComponent<NoticeReactProps, NoticeState> {
                 <div>{this.renderTypeIcon()}</div>
                 <div className={`${prefixCls}-inner`}>
                     <div className={`${prefixCls}-content-wrapper`} aria-label={'wrapper'}>
-                        {title ? <div id={titleID} className={`${prefixCls}-title`} aria-label={'notification-title'}>{title}</div> : ''}
-                        {content ? <div className={`${prefixCls}-content`} aria-label={'notification-content'}>{content}</div> : ''}
+                        {title ? <div id={titleID} className={`${prefixCls}-title`} aria-label={'notification title'}>{title}</div> : ''}
+                        {content ? <div className={`${prefixCls}-content`} aria-label={'notification content'}>{content}</div> : ''}
                     </div>
                     {showClose && (
                         <Button
