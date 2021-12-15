@@ -25,6 +25,7 @@ export type CheckboxGroupProps = {
     style?: React.CSSProperties;
     className?: string;
     type?: CheckboxType;
+    'aria-label'?: React.AriaAttributes['aria-label'];
 };
 
 export type CheckboxGroupState = {
@@ -119,6 +120,7 @@ class CheckboxGroup extends BaseComponent<CheckboxGroupProps, CheckboxGroupState
                 if (typeof option === 'string') {
                     return (
                         <Checkbox
+                            role="listitem"
                             key={index}
                             disabled={this.props.disabled}
                             value={option}
@@ -130,6 +132,7 @@ class CheckboxGroup extends BaseComponent<CheckboxGroupProps, CheckboxGroupState
                 } else {
                     return (
                         <Checkbox
+                            role="listitem"
                             key={index}
                             disabled={option.disabled || this.props.disabled}
                             value={option.value}
@@ -145,14 +148,13 @@ class CheckboxGroup extends BaseComponent<CheckboxGroupProps, CheckboxGroupState
                 }
             });
         } else if (children) {
-            inner = (React.Children.toArray(children) as React.ReactElement[]).map((itm, index) => React.cloneElement(itm, { key: index }));
+            inner = (React.Children.toArray(children) as React.ReactElement[]).map((itm, index) => React.cloneElement(itm, { key: index, role: 'listitem' }));
         }
 
         return (
             <div
-                role="listbox"
-                aria-label="Checkbox group"
-                aria-disabled={disabled}
+                role="list"
+                aria-label={this.props['aria-label']}
                 className={prefixClsDisplay} 
                 style={style}
             >

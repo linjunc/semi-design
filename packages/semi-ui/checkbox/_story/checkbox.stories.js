@@ -5,6 +5,7 @@ import Checkbox from '../index';
 import CheckboxGroup from '../checkboxGroup';
 import { Col, Input, Row } from '../../index';
 import { IconClose } from '@douyinfe/semi-icons';
+import { getUuidShort } from '@douyinfe/semi-foundation/utils/uuid';
 
 export default {
   title: 'Checkbox',
@@ -35,7 +36,7 @@ export const CheckboxDefault = () => {
 export const CheckboxWithoutText = () => {
   return (
     <div>
-      <Checkbox onChange={e => console.log(e)} />
+      <Checkbox aria-label='选择框示例' onChange={e => console.log(e)} />
     </div>
   );
 };
@@ -410,6 +411,7 @@ export const CheckboxRenderInDiv = () => (
       }}
     >
       <Checkbox
+        aria-label='checkbox demo'
         onChange={(...args) => {
           console.log('clicked checkbox: ', ...args);
         }}
@@ -497,6 +499,7 @@ const TransformSelect = props => {
       <div>
         <div>
           <Input
+            aria-label='input'
             value={inputValue}
             prefix="search"
             clearable
@@ -512,6 +515,7 @@ const TransformSelect = props => {
         </div>
         <div>
           <CheckboxGroup
+            aria-label='checkbox group box'
             options={viewsOptions}
             value={currentValue}
             onChange={onSelectChange}
@@ -559,7 +563,7 @@ export const BugDemo = () => <TransformSelect />;
 export const CheckboxGroupCardStyle = () => (
   <>
     <div>常见情况</div>
-    <CheckboxGroup type="card" direction="horizontal" defaultValue={['1']}>
+    <CheckboxGroup key={getUuidShort({ prefix: '' })} aria-label='group demo' type="card" direction="horizontal" defaultValue={['1']}>
       <Checkbox value="1" extra="Semi Design" style={{ width: 280 }}>
         多选框标题
       </Checkbox>
@@ -573,7 +577,7 @@ export const CheckboxGroupCardStyle = () => (
     <br />
     <br />
     <div>radio disabled</div>
-    <CheckboxGroup type="card" direction="horizontal" defaultValue={['1']}>
+    <CheckboxGroup key={getUuidShort({ prefix: '' })} aria-label='group demo' type="card" direction="horizontal" defaultValue={['1']}>
       <Checkbox value="1" disabled extra="Semi Design" style={{ width: 280 }}>
         多选框标题
       </Checkbox>
@@ -587,7 +591,7 @@ export const CheckboxGroupCardStyle = () => (
     <br />
     <br />
     <div>checkboxGroup disabled</div>
-    <CheckboxGroup type="card" direction="horizontal" disabled defaultValue={['1']}>
+    <CheckboxGroup key={getUuidShort({ prefix: '' })} aria-label='group demo' type="card" direction="horizontal" disabled defaultValue={['1']}>
       <Checkbox value="1" extra="Semi Design" style={{ width: 280 }}>
         多选框标题
       </Checkbox>
@@ -601,7 +605,7 @@ export const CheckboxGroupCardStyle = () => (
     <br />
     <br />
     <div>文字很长，并且没有设置宽度，因此换行显示</div>
-    <CheckboxGroup type="card" direction="horizontal" defaultValue={['1']}>
+    <CheckboxGroup key={getUuidShort({ prefix: '' })} aria-label='group demo' type="card" direction="horizontal" defaultValue={['1']}>
       <Checkbox
         value="1"
         extra="Semi Design 是由互娱社区前端团队与 UED 团队共同设计开发并维护的设计系统"
@@ -624,7 +628,7 @@ export const CheckboxGroupCardStyle = () => (
     <br />
     <br />
     <div>设置了width=180</div>
-    <CheckboxGroup type="card" direction="horizontal" defaultValue={['1']}>
+    <CheckboxGroup key={getUuidShort({ prefix: '' })} aria-label='group demo' type="card" direction="horizontal" defaultValue={['1']}>
       <Checkbox
         value="1"
         extra="Semi Design 是由互娱社区前端团队与 UED 团队共同设计开发并维护的设计系统"
@@ -650,7 +654,7 @@ export const CheckboxGroupCardStyle = () => (
     <br />
     <br />
     <div>没有extra，width=180</div>
-    <CheckboxGroup type="card" direction="horizontal" defaultValue={['1']}>
+    <CheckboxGroup key={getUuidShort({ prefix: '' })} aria-label='group demo' type="card" direction="horizontal" defaultValue={['1']}>
       <Checkbox value="1" style={{ width: 180 }}>
         多选框标题
       </Checkbox>
@@ -664,19 +668,22 @@ export const CheckboxGroupCardStyle = () => (
     <br />
     <br />
     <div>没有标题，width=380</div>
-    <CheckboxGroup type="card" direction="horizontal" defaultValue={['1']}>
+    <CheckboxGroup key={getUuidShort({ prefix: 'test' })} aria-label='group demo' type="card" direction="horizontal" defaultValue={['1']}>
       <Checkbox
         value="1"
+        aria-label='checkbox demo'
         extra="Semi Design 是由互娱社区前端团队与 UED 团队共同设计开发并维护的设计系统"
         style={{ width: 380 }}
       ></Checkbox>
       <Checkbox
         value="2"
+        aria-label='checkbox demo'
         extra="Semi Design 是由互娱社区前端团队与 UED 团队共同设计开发并维护的设计系统"
         style={{ width: 380 }}
       ></Checkbox>
       <Checkbox
         value="3"
+        aria-label='checkbox demo'
         extra="Semi Design 是由互娱社区前端团队与 UED 团队共同设计开发并维护的设计系统"
         style={{ width: 380 }}
       ></Checkbox>
@@ -686,7 +693,7 @@ export const CheckboxGroupCardStyle = () => (
     <hr />
     <div>下面是垂直的情况：</div>
     <div>常见情况</div>
-    <CheckboxGroup direction="vertical" type="card" defaultValue={['1']}>
+    <CheckboxGroup key={getUuidShort({ prefix: '' })} aria-label='group demo' direction="vertical" type="card" defaultValue={['1']}>
       <Checkbox value="1" extra="Semi Design" style={{ width: 280 }}>
         多选框标题
       </Checkbox>
@@ -700,7 +707,7 @@ export const CheckboxGroupCardStyle = () => (
     <br />
     <br />
     <div>没有设置宽度</div>
-    <CheckboxGroup direction="vertical" type="card" defaultValue={['1']}>
+    <CheckboxGroup key={getUuidShort({ prefix: '' })} aria-label='group demo' direction="vertical" type="card" defaultValue={['1']}>
       <Checkbox
         value="1"
         extra="Semi Design 是由互娱社区前端团队与 UED 团队共同设计开发并维护的设计系统"
@@ -723,7 +730,7 @@ export const CheckboxGroupCardStyle = () => (
     <br />
     <br />
     <div>设置了width=380</div>
-    <CheckboxGroup direction="vertical" type="card" defaultValue={['1']}>
+    <CheckboxGroup key={getUuidShort({ prefix: '' })} aria-label='group demo' direction="vertical" type="card" defaultValue={['1']}>
       <Checkbox
         value="1"
         extra="Semi Design 是由互娱社区前端团队与 UED 团队共同设计开发并维护的设计系统"
@@ -745,7 +752,7 @@ export const CheckboxGroupCardStyle = () => (
       >
         多选框标题
       </Checkbox>
-    </CheckboxGroup>
+    </CheckboxGroup> */}
   </>
 );
 

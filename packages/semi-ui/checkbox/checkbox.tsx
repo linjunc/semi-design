@@ -9,6 +9,7 @@ import BaseComponent from '../_base/baseComponent';
 import '@douyinfe/semi-foundation/checkbox/checkbox.scss';
 import { Context } from './context';
 import { isUndefined, isBoolean, noop } from 'lodash';
+import { getUuidShort } from '@douyinfe/semi-foundation/utils/uuid';
 export type CheckboxEvent = BasicCheckboxEvent;
 export type TargetObject = BasicTargetObject;
 
@@ -19,7 +20,9 @@ export interface CheckboxProps extends BaseCheckboxProps {
     onMouseEnter?: React.MouseEventHandler<HTMLSpanElement>;
     onMouseLeave?: React.MouseEventHandler<HTMLSpanElement>;
     extra?: React.ReactNode;
-    ariaLabel?: string;
+    'aria-label'?: React.AriaAttributes['aria-label'];
+    role?: React.HTMLAttributes<HTMLSpanElement>['role']; // a11y: wrapper role
+    tabIndex?: number; // a11y: wrapper tabIndex
 }
 interface CheckboxState {
     checked: boolean;
@@ -45,10 +48,9 @@ class Checkbox extends BaseComponent<CheckboxProps, CheckboxState> {
         onMouseEnter: PropTypes.func,
         onMouseLeave: PropTypes.func,
         extra: PropTypes.node,
-        addonId: PropTypes.string, // A11y aria-labelledby
-        extraId: PropTypes.string, // A11y aria-describedby
         index: PropTypes.number,
-        ariaLabel: PropTypes.string,
+        'aria-label': PropTypes.string,
+        tabIndex: PropTypes.number,
     };
 
     static defaultProps = {
@@ -80,6 +82,8 @@ class Checkbox extends BaseComponent<CheckboxProps, CheckboxState> {
     }
 
     foundation: CheckboxFoundation;
+    addonId: string;
+    extraId: string;
     constructor(props: CheckboxProps) {
         super(props);
 
@@ -90,6 +94,8 @@ class Checkbox extends BaseComponent<CheckboxProps, CheckboxState> {
         };
 
         this.checkboxEntity = null;
+        this.addonId = getUuidShort({ prefix: 'addon' });
+        this.extraId = getUuidShort({ prefix: 'extra' });
         this.foundation = new CheckboxFoundation(this.adapter);
     }
 
@@ -131,9 +137,8 @@ class Checkbox extends BaseComponent<CheckboxProps, CheckboxState> {
             onMouseLeave,
             extra,
             value,
-            addonId,
-            extraId,
-            ariaLabel
+            role,
+            tabIndex
         } = this.props;
         const { checked } = this.state;
         const props: Record<string, any> = {
@@ -177,29 +182,27 @@ class Checkbox extends BaseComponent<CheckboxProps, CheckboxState> {
 
         const renderContent = () => (
             <>
-                {children ? <span id={addonId} className={`${prefix}-addon`}>{children}</span> : null}
-                {extra ? <div id={extraId} className={extraCls}>{extra}</div> : null}
+                {children ? <span id={this.addonId} className={`${prefix}-addon`}>{children}</span> : null}
+                {extra ? <div id={this.extraId} className={extraCls}>{extra}</div> : null}
             </>
         );
         return (
+            // label is better than span, however span is here which is to solve gitlab issue #364
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
             <span
-                role='checkbox'
-                tabIndex={disabled ? -1 : 0}
-                aria-label={ariaLabel}
-                aria-disabled={props.checked}
-                aria-checked={props.checked}
-                aria-labelledby={addonId}
-                aria-describedby={extraId}
+                role={role}
+                tabIndex={tabIndex}
                 style={style}
                 className={wrapper}
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
                 onClick={this.handleChange}
-                onKeyPress={this.handleEnterPress}
             >
                 <CheckboxInner
                     {...this.props}
                     {...props}
+                    addonId={children && this.addonId}
+                    extraId={extra && this.extraId}
                     name={name}
                     isPureCardType={props.isPureCardType}
                     ref={ref => {
