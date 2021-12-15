@@ -32,6 +32,7 @@ export interface ButtonProps {
     onMouseDown?: React.MouseEventHandler<HTMLButtonElement>;
     onMouseEnter?: React.MouseEventHandler<HTMLButtonElement>;
     onMouseLeave?: React.MouseEventHandler<HTMLButtonElement>;
+    'aria-label'?: React.AriaAttributes['aria-label'];
 }
 
 // TODO: icon configuration
@@ -67,6 +68,7 @@ export default class Button extends PureComponent<ButtonProps> {
         className: PropTypes.string,
         onMouseEnter: PropTypes.func,
         onMouseLeave: PropTypes.func,
+        'aria-label': PropTypes.string,
     };
 
     render() {
