@@ -314,8 +314,8 @@ class Transfer extends BaseComponent<TransferProps, TransferState> {
             [`${prefixcls}-left-header`]: type === 'left',
         });
         return (
-            <div role="status" className={headerCls}>
-                <span aria-label={totalContent} className={`${prefixcls}-header-total`}>{totalContent}</span>
+            <div className={headerCls}>
+                <span className={`${prefixcls}-header-total`}>{totalContent}</span>
                 {showButton ? (
                     <Button
                         theme="borderless"
@@ -449,7 +449,7 @@ class Transfer extends BaseComponent<TransferProps, TransferState> {
     renderGroupTitle(group: GroupItem) {
         const groupCls = cls(`${prefixcls}-group-title`);
         return (
-            <div role="textbox" aria-label={group.title} className={groupCls} key={group.title}>
+            <div className={groupCls} key={group.title}>
                 {group.title}
             </div>
         );
@@ -642,7 +642,7 @@ class Transfer extends BaseComponent<TransferProps, TransferState> {
         return (
             <LocaleConsumer componentName="Transfer">
                 {(locale: Locale['Transfer']) => (
-                    <div role="" className={transferCls} style={style}>
+                    <div className={transferCls} style={style}>
                         {this.renderLeft(locale)}
                         {this.renderRight(locale)}
                     </div>
