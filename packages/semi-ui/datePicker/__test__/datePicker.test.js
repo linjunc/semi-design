@@ -870,4 +870,33 @@ describe(`DatePicker`, () => {
         expect(allSeparators[0].textContent.trim()).toBe(rangeSeparator);
         expect(allSeparators[1].textContent.trim()).toBe(rangeSeparator);
     });
+
+    it('test dateRange triggerRender', async () => {
+        const elem = mount(
+            <DatePicker
+                motion={false}
+                // defaultOpen
+                type="dateRange"
+                triggerRender={({ placeholder }) => (
+                    <button>
+                        {placeholder}
+                    </button>
+                )}
+            />
+        );
+        const trigger = document.querySelector('button');
+        trigger.click();
+        await sleep();
+        const leftPanel = document.querySelector(`.${BASE_CLASS_PREFIX}-datepicker-month-grid-left`);
+        const leftSecondWeek = leftPanel.querySelectorAll(`.${BASE_CLASS_PREFIX}-datepicker-week`)[1];
+        const leftSecondWeekDays = leftSecondWeek.querySelectorAll(`.${BASE_CLASS_PREFIX}-datepicker-day`);
+        const rightPanel = document.querySelector(`.${BASE_CLASS_PREFIX}-datepicker-month-grid-right`);
+        const rightSecondWeek = rightPanel.querySelectorAll(`.${BASE_CLASS_PREFIX}-datepicker-week`)[1];
+        const rightSecondWeekDays = rightSecondWeek.querySelectorAll(`.${BASE_CLASS_PREFIX}-datepicker-day`);
+        leftSecondWeekDays[0].click();
+        rightSecondWeekDays[0].click();
+
+        const baseElem = elem.find(BaseDatePicker);
+        expect(baseElem.state('panelShow')).toBeFalsy();
+    });
 });
